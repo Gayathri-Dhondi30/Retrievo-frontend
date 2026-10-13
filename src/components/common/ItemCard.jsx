@@ -21,6 +21,19 @@ export const ItemCard = ({ item }) => {
     }
   };
 
+  // Contextual high-quality images by category & keywords
+  const CATEGORY_DEFAULT_IMAGES = {
+    'Electronics': 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80',
+    'Wallets and Money': 'https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=800&q=80',
+    'Keys': 'https://images.unsplash.com/photo-1582139329536-e7284fece509?auto=format&fit=crop&w=800&q=80',
+    'Bags and Backpacks': 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80',
+    'Clothing & Accessories': 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=800&q=80',
+    'Documents & IDs': 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80',
+    'Books & Stationery': 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80',
+    'Jewelry & Watches': 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=800&q=80',
+    'Sports Equipment': 'https://images.unsplash.com/photo-1517649763962-0c623266ddc0?auto=format&fit=crop&w=800&q=80'
+  };
+
   // Image URL helper
   const getImageUrl = () => {
     if (item.images && item.images.length > 0) {
@@ -28,7 +41,16 @@ export const ItemCard = ({ item }) => {
       return img.imageUrl || img.filePath || `/uploads/${img.fileName}`;
     }
     if (item.imageUrl) return item.imageUrl;
-    return null;
+
+    const titleLower = (item.title || item.name || '').toLowerCase();
+    if (titleLower.includes('wallet')) return 'https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=800&q=80';
+    if (titleLower.includes('sleeve')) return 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=800&q=80';
+    if (titleLower.includes('macbook') || titleLower.includes('laptop')) return 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80';
+    if (titleLower.includes('phone') || titleLower.includes('iphone')) return 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80';
+    if (titleLower.includes('key')) return 'https://images.unsplash.com/photo-1582139329536-e7284fece509?auto=format&fit=crop&w=800&q=80';
+    if (titleLower.includes('bag') || titleLower.includes('backpack')) return 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80';
+
+    return CATEGORY_DEFAULT_IMAGES[item.category] || null;
   };
 
   const imageSrc = getImageUrl();

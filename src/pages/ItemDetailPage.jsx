@@ -149,7 +149,21 @@ export const ItemDetailPage = () => {
   }
 
   const images = item.images || [];
-  const primaryImage = images.length > 0 ? (images[0].imageUrl || images[0].filePath || `/uploads/${images[0].fileName}`) : null;
+  const getDetailImage = () => {
+    if (images.length > 0) {
+      return images[0].imageUrl || images[0].filePath || `/uploads/${images[0].fileName}`;
+    }
+    if (item.imageUrl) return item.imageUrl;
+    const titleLower = (item.title || item.name || '').toLowerCase();
+    if (titleLower.includes('wallet')) return 'https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=800&q=80';
+    if (titleLower.includes('sleeve')) return 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=800&q=80';
+    if (titleLower.includes('macbook') || titleLower.includes('laptop')) return 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80';
+    if (titleLower.includes('phone') || titleLower.includes('iphone')) return 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80';
+    if (titleLower.includes('key')) return 'https://images.unsplash.com/photo-1582139329536-e7284fece509?auto=format&fit=crop&w=800&q=80';
+    if (titleLower.includes('bag') || titleLower.includes('backpack')) return 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80';
+    return 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80';
+  };
+  const primaryImage = getDetailImage();
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
